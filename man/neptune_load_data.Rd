@@ -9,6 +9,9 @@ neptune_load_data(data, endpoint, S3_endpoint, AWS_accessKey, AWS_secret)
 \arguments{
 \item{AWS_secret}{}
 }
+\value{
+parsed message from AWS
+}
 \description{
 Load data into your Neptune Instance
 }

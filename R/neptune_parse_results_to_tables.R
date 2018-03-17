@@ -25,7 +25,7 @@ gremlin_parse_properties_to_data_frame <- function(x){
 neptune_parse_results_to_tables <- function(data){
   library(dplyr)
   gdata <- data$result$data
-  verteces <- lapply(gdata$`@value`,function(x){
+  vertices <- lapply(gdata$`@value`,function(x){
     if(x$`@type`=='g:Vertex'){
       VertexDF <- data.frame(x$`@value`[c('id','label')]) #Get ID and label for Vertex
       properties <- gremlin_parse_properties_to_data_frame(x$`@value`$properties)
@@ -42,5 +42,5 @@ neptune_parse_results_to_tables <- function(data){
       #cbind(VertexDF,properties )
     }
   }) %>% data.table::rbindlist(fill = TRUE)-> res
-  list(verteces=verteces,edges=edges)
+  list(vertices=vertices,edges=edges)
 }

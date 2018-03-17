@@ -8,4 +8,7 @@ Description: The package contains wrapper functions to connect to AWS Neptune th
 License: GNU GENERAL PUBLIC LICENSE Version 3
 Encoding: UTF-8
 LazyData: true
+Imports: 
+  httr
+LazyLoad: false
 RoxygenNote: 6.0.1
