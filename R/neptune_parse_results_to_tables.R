@@ -29,8 +29,12 @@ neptune_parse_results_to_tables <- function(data){
     if(x$`@type`=='g:Vertex'){
       VertexDF <- data.frame(x$`@value`[c('id','label')]) #Get ID and label for Vertex
       properties <- gremlin_parse_properties_to_data_frame(x$`@value`$properties)
-      cbind(VertexDF,properties )
-      #vDF
+     if(!is.null(properties))
+       cbind(VertexDF,properties )
+      else
+        VertexDF
+#      vDF
+#    VertexDF
     }
   }
   ) %>% data.table::rbindlist(fill = TRUE)-> res

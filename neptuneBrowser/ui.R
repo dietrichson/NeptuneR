@@ -41,7 +41,8 @@ shinyUI(
                              DT::dataTableOutput('Edges')),
                     tabPanel('Visualization',
                              fluidPage(
-                               fluidRow('Controls'),
+                               fluidRow(column(4,
+                                               selectInput('edgesMap', 'Edges Map to:', choices = c()))),
                                fluidRow(visNetworkOutput('network',height = '800px'))
                              )
                     ),
