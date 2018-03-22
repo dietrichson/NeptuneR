@@ -8,7 +8,7 @@ neptune_raw_json_query(ep,'{"gremlin":"g.V().limit(1)"}')
 test1 <- neptune_raw_json_query(ep,'{"gremlin":"g.V().limit(10)"}')
 test2 <- neptune_raw_json_query(ep,'{"gremlin":"g.E().limit(10)"}')
 
-res1 <- neptune_parse_results_to_tables(test1)
+res1 <- neptune_parse_results_to_tables(test1)res1
 res2 <- neptune_parse_results_to_tables(test2)
 
 library(visNetwork)
@@ -18,3 +18,12 @@ visNetwork(res1$verteces %>% mutate(title=label,label=name),
            ) %>%
   visNodes(shape='circle') %>%
   visEdges(arrows='to')
+
+
+test4 <- with_verbose(
+  neptune_raw_json_query(ep,'{"gremlin":"g.addV(\'label1\').property(id, \'customid\') "}')
+)
+
+test4 <- with_verbose(
+  neptune_raw_json_query(ep,'{"gremlin":"g.V()" }')
+)

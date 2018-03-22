@@ -4,7 +4,7 @@
 \alias{neptune_raw_json_query}
 \title{Send a Raw query to Neptune}
 \usage{
-neptune_raw_json_query(ep, jsonQuery, as = c("parsed", "text", "raw"))
+neptune_raw_json_query(ep, jsonQuery, as = c("parsed", "text", "raw"), ...)
 }
 \arguments{
 \item{ep}{Endpoint}
