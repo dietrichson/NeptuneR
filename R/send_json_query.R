@@ -9,7 +9,7 @@
 #'
 #' @export
 neptune_raw_json_query <- function(ep, jsonQuery, as=c('parsed','text','raw'),...){
-    res <- POST(neptune_base_url(ep), body=jsonQuery,content_type_json(),...)
+    res <- POST(neptune_base_url(ep), body=jsonQuery, content_type_json(), ...)
     content(res,as=match.arg(as))
 }
 
