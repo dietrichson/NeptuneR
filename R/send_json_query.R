@@ -10,7 +10,17 @@
 #' @export
 neptune_raw_json_query <- function(ep, jsonQuery, as=c('parsed','text','raw'),...){
     res <- POST(neptune_base_url(ep), body=jsonQuery, content_type_json(), ...)
-    content(res,as=match.arg(as))
+    
+    if(res$status_code == 200){
+      print("Succesful query")
+    }
+    else{
+      print("Query produced an error!")
+      error<-content(res,as=match.arg(as))
+      print(error$`status`$`code`)
+    }
+    
+    return(content(res,as=match.arg(as)))
 }
 
 # library(RCurl)

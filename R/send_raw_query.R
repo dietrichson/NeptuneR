@@ -8,6 +8,15 @@
 neptune_send_json_query <- function(ep,query,as=c('parsed','text','raw'),...){
   jsonQuery<- paste0("{",'"',"gremlin",'"',":",'"',query,'"',"}",sep="")
   res <- POST(neptune_base_url(ep), body=jsonQuery, content_type_json(),...)
-  content(res,as=match.arg(as))
+  
+  if(res$status_code == 200){
+    print("Succesful query")
+  }
+  else{
+    print("Query produced an error!")
+    error<-content(res,as=match.arg(as))
+    print(error$`status`$`code`)
+  }
+  return(content(res,as=match.arg(as)))
 }
 
