@@ -2,18 +2,18 @@
 % Please edit documentation in R/send_raw_query.R
 \name{neptune_send_json_query}
 \alias{neptune_send_json_query}
-\title{Send a Raw query to Neptune}
+\title{Send a Query to Neptune}
 \usage{
-neptune_send_json_query(ep, query)
+neptune_send_json_query(ep, query, as = c("parsed", "text", "raw"), ...)
 }
 \arguments{
 \item{ep}{Endpoint}
 
-\item{query}{The Raw Query (in JSON) to be sent}
+\item{query}{The Query (in selected type) to be sent}
 }
 \value{
 the result from POST (in JSON)
 }
 \description{
-Send a Raw query to Neptune
+Send a Query to Neptune
 }
