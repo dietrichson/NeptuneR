@@ -7,7 +7,7 @@ Maintainer: The package maintainer <dietrichson@gmail.com>
 Description: The package contains wrapper functions to connect to AWS Neptune through and http endpoint
 License: GNU GENERAL PUBLIC LICENSE Version 3
 Encoding: UTF-8
-LazyData: true
+LazyData:true
 Imports: 
   httr
 LazyLoad: false

@@ -13,33 +13,72 @@ neptune_load_data <- function(data, endpoint,S3_endpoint,AWS_accessKey,AWS_secre
 }
 
 
-#' Load data into your Neptune Instance from a data table
+#' Load data into your Neptune Instance from a data frame
 #'
-#' @param data
-#' @param endpoint
-#' @param 
-#' @param 
-#' @param 
+#' @param data The source data frame
+#' @param ep Neptune Endpoint
+#' @param definedid Define if the ID is specified in the data (otherwise, it should be set automatically)
 #'
-#' @return parsed message from AWS
+#'
+#' @return
 #' @export
-neptune_load_data_frame <- function(data, endpoint ){
- property <- grep("property",names(data))
-
-  addV<-matrix(0, nrow=nrow(data),ncol=6)
+neptune_load_data_frame <- function(data, ep,definedid=TRUE){
+  
+  #Define a funcion to determine if a specific cell is numeric
+  numbers_only <- function(x) !grepl("\\D", x)
+  
+  #Finds all columns with properties
+  property <- grep("property",names(data))
+  
+  #Transforms all elements to characters
+  data[]<-lapply(data, as.character)
+  
+  #Creates a matrix skeleton for the basic query
+  addV<-matrix("", nrow=nrow(data),ncol=6)
   addV[,1]<-"g.addV('"
   addV[,3]<-"')"
+  
+  #Only adds ID if it was specified
+  if(definedid==TRUE){
   addV[,4]<-".property(id,'"
   addV[,6] <- "')"
-  for(i in seq_len(nrow(data))){
-  addV[i,2] <-data$label[i]
-  addV[i,5]<-data$id[i]
+  }else{
+    addV[,4]<-""
+    addV[,6] <- ""
+    
   }
   
-addV <- apply(addV, 1, paste, collapse="")
-addV<-as.data.frame(addV)
+  #Adds the label to every row
+  for(i in seq_len(nrow(data))){
+  addV[i,2] <-data$label[i]
+  if(definedid==TRUE) addV[i,5]<-data$id[i]
+  }
+  
+  #Collapses every row to create a basic query (without the rest of the properties)
+  addV <- apply(addV, 1, paste, collapse="")
+  addV<-as.data.frame(addV, stringsAsFactors=FALSE)
 
-properties<-matrix(".property(", nrow=nrow(data), ncol=length(property))
-properties2 <- matrix( , nrow=nrow(data),ncol=lenght(property)
+
+#Main loop that checks every property in the data and adds it to the query  
+i<-1
+
+while(i<=nrow(data)){
+  j<-property[1]
+  while(j<=max(property)){
+    if(numbers_only(data[i,j+1])==TRUE){
+      addV[i,1]<-paste(addV[i,1],".property('",data[i,j],"',",data[i,j+1],")",sep="")
+    }else{
+    addV[i,1]<-paste(addV[i,1],".property('",data[i,j],"','",data[i,j+1],"')",sep="")
+    }
+    j<-j+2
+    }
+  i<-i+1
+  }
+
+#Finally, run each query to load the data
+for(i in seq_len(nrow(addV))){
+  neptune_send_json_query(ep,addV[i,1])
+  print(i)
+}
 
 }

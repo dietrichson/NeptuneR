@@ -1,10 +1,11 @@
-#' Vertex  for the Tinkerpop graph example
+
+#' Edges for the Tinkerpop graph example
 #'
 #'Two data frames, one for Vertex and Another with edges between those vertex from the example of Tinkerpop tutorial.
 #' @docType data
 #'
-#' @usage data(Vertex)
-#' 
+#'
+#' @usage data(Edges)
 #'
 #' 
 #'
@@ -19,4 +20,5 @@
 #' content <- head(vertex)
 #'
 #'
-"Vertex"
+
+"Edges"
