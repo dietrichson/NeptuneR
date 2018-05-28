@@ -7,6 +7,8 @@
 neptune_load_data(data, endpoint, S3_endpoint, AWS_accessKey, AWS_secret)
 }
 \arguments{
+\item{endpoint}{}
+
 \item{AWS_secret}{}
 }
 \value{

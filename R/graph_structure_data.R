@@ -130,9 +130,28 @@ neptune_list_properties<-function(ep,element="vertices"){
   }
   
   if(element=="edges"){
-    stop("Not implemented yet")
+    res<-neptune_send_json_query(ep,"g.E().group().by(label).by(properties().dedup().fold())")
+    x<-res$result$data$`@value`[[1]]$`@value`
+  } else stop("Invalid element type")
+  
+  i<-1
+  j<-1
+  nodes<-Node$new("Labels")
+  while(i<=length(x)){
+    if(is.character(x[[i]])){
+      y<-nodes$AddChild(x[[i]])
+    }
+    else{
+      j<-1
+      while(j<=length(x[[i]]$`@value`)){
+        y$AddChild(x[[i]]$`@value`[[j]]$`@value`$`key`)
+        j<-j+1
+      }
+    }
+    
+    i<-i+1
   }
-  else stop("Invalid element type")
+  return(nodes)
 }
 
 
