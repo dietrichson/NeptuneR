@@ -12,10 +12,10 @@ library(visNetwork)
 # Define UI for application that draws a histogram
 shinyUI(
   fluidPage(
-
+    
     # Application title
     titlePanel("Neptune Query Browser"),
-
+    
     # Sidebar with a slider input for number of bins
     sidebarLayout(
       sidebarPanel(
@@ -31,7 +31,7 @@ shinyUI(
           )
         )
       ),
-
+      
       # Show a plot of the generated distribution
       mainPanel(
         tabsetPanel(id='results',
@@ -49,10 +49,9 @@ shinyUI(
                     tabPanel('Post Request'),
                     tabPanel('Raw Results',
                              textAreaInput('rawResults','Raw Results',height = '600px',width = '600px'))
-
+                    
         )
       )
     )
   )
 )
-

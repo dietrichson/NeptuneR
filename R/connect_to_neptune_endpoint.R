@@ -20,6 +20,14 @@ connect_to_neptune_endpoint <- function(host,
   ep
 }
 
+
+
+#' Title
+#'
+#' @param ep Endpoint
+#'
+#' @return Full URL
+#' @export
 neptune_base_url <- function(ep){
   paste(ep$http_host, ":", ep$http_port,"/",ep$type, sep = "")
 }
