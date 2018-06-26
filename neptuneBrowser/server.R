@@ -5,6 +5,7 @@
 library(shiny)
 library(neptune)
 library(jsonlite)
+library(dplyr)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
   
@@ -59,12 +60,15 @@ shinyServer(function(input, output, session) {
     
     
     
-    myVs <- ds$vertices
-    if(is.null(myVs$id)){ #nothing there
-      myVds <- data.frame(id=unique(ds$edges$id))
-    }
+    #myVs <- ds$vertices
+    #if(is.null(myVs$id)){ #nothing there
+    #  myVds <- data.frame(id=unique(ds$edges$id))
+    #}
     
-    visNetwork(myVs %>% mutate(group=label),ds$edges %>% mutate(from=outV,to=inV))
+    visNetwork(nodes=ds$vertices,ds$edges %>% mutate(from=outV,to=inV))
+    #visEdges<-ds$edges
+    #rename(visEdges, from = outV, to = inV)
+    #visNetwork(nodes=ds$vertices,edges = visEdges)
   })
   
 })

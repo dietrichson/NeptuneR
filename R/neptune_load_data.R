@@ -1,19 +1,4 @@
-#' Load data into your Neptune Instance
-#'
-#' @param data
-#' @param endpoint 
-#' @param S3_endpoint
-#' @param AWS_accessKey
-#' @param AWS_secret
-#'
-#' @return parsed message from AWS
-#' @export
-neptune_load_data <- function(data, endpoint,S3_endpoint,AWS_accessKey,AWS_secret){
-  cat('Not implemented Yet!')
-}
-
-
-#' Load data into your Neptune Instance from a data frame
+#' Load vertices into your Neptune Instance from a data frame
 #'
 #' @param data The source data frame
 #' @param ep Neptune Endpoint
@@ -22,6 +7,8 @@ neptune_load_data <- function(data, endpoint,S3_endpoint,AWS_accessKey,AWS_secre
 #'
 #' @return exported data
 #' @export
+#' 
+ 
 neptune_load_vertex <- function(data, ep,definedid=TRUE){
   
   #Define a funcion to determine if a specific cell is numeric
@@ -85,7 +72,7 @@ for(i in seq_len(nrow(addV))){
 
 
 
-#' Load data into your Neptune Instance from a data frame
+#' Load edges into your Neptune Instance from a data frame
 #'
 #' @param data The source data frame
 #' @param ep Neptune Endpoint
@@ -93,6 +80,8 @@ for(i in seq_len(nrow(addV))){
 
 #' @return exported data
 #' @export
+#' 
+
 neptune_load_edges<- function(data, ep,definedid=TRUE){
   
   

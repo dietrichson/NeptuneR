@@ -2,7 +2,7 @@
 % Please edit documentation in R/neptune_load_data.R
 \name{neptune_load_vertex}
 \alias{neptune_load_vertex}
-\title{Load data into your Neptune Instance from a data frame}
+\title{Load vertices into your Neptune Instance from a data frame}
 \usage{
 neptune_load_vertex(data, ep, definedid = TRUE)
 }
@@ -17,5 +17,5 @@ neptune_load_vertex(data, ep, definedid = TRUE)
 exported data
 }
 \description{
-Load data into your Neptune Instance from a data frame
+Load vertices into your Neptune Instance from a data frame
 }

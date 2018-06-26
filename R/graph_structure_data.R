@@ -173,7 +173,7 @@ neptune_list_properties<-function(ep,element="vertices"){
 #' 
 #' 
 #' 
-neptune_count_property<-function(ep,element="vertices",property,value){
+neptune_count_property<-function(ep,element="Vertices",property,value){
   if(element=="vertices"){
     query<-paste("g.V().has(",property,",",value,").count()",sep="")
     res<-neptune_send_json_query(ep,query)

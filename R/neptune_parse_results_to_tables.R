@@ -6,29 +6,13 @@
 #' @import dplyr
 #' @export neptune_parse_results_to_tables
 
-
-gremlin_parse_properties_to_data_frame <- function(x){
-  #parses gremlin json lists to a data.frame
-  myNames <- names(x)
-  lapply(myNames,function(myName){ #Data frame for properties
-    #Default node type is text node - it has no tag
-    nodeValue <- x[[myName]][[1]]$`@value`$value
-    if(!is.character(nodeValue)){
-      nodeValue <- x[[myName]][[1]]$`@value`$value$`@value`
-    }
-    tDF <- data.frame( nodeValue)
-    names(tDF) <- x[[myName]][[1]]$`@value`$label
-    tDF
-  }) %>% do.call(cbind,.)
-}
-
 neptune_parse_results_to_tables <- function(data){
   library(dplyr)
   gdata <- data$result$data
   vertices <- lapply(gdata$`@value`,function(x){
     if(x$`@type`=='g:Vertex'){
       VertexDF <- data.frame(x$`@value`[c('id','label')]) #Get ID and label for Vertex
-      properties <- gremlin_parse_properties_to_data_frame(x$`@value`$properties)
+      properties <- gremlin_properties_to_table(x$`@value`$properties)
      if(!is.null(properties))
        cbind(VertexDF,properties )
       else
@@ -47,4 +31,37 @@ neptune_parse_results_to_tables <- function(data){
     }
   }) %>% data.table::rbindlist(fill = TRUE)-> res
   list(vertices=vertices,edges=edges)
+}
+
+
+#' Pastes all properties of an element to a data frame
+#' @param x Element
+#' @return Returns a data frame with all of the element's properties
+#'
+#'
+#' @import dplyr
+#' @export
+#' 
+
+gremlin_properties_to_table <- function(x){
+  properties<-0
+  properties <- as.data.frame(properties)
+  for (i in x) {
+    for (j in i) {
+      if(!is.character(j$`@value`$value)){
+        prop<-j$`@value`$value$`@value`
+        prop<-as.data.frame(prop)
+      }else{
+        prop<-j$`@value`$value
+        prop<-as.data.frame(prop)
+        }
+      names(prop)<-j$`@value`$label
+      properties<-cbind(properties,prop)
+    }
+    
+  }
+  names<-names(properties)[-1]
+  properties<-properties[,-1]
+  names(properties)<-names
+  properties
 }
