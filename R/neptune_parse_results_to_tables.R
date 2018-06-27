@@ -14,7 +14,7 @@ neptune_parse_results_to_tables <- function(data){
       VertexDF <- data.frame(x$`@value`[c('id','label')]) #Get ID and label for Vertex
       properties <- gremlin_properties_to_table(x$`@value`$properties)
      if(!is.null(properties))
-       cbind(VertexDF,properties )
+       cbind(VertexDF,properties)
       else
         VertexDF
 #      vDF
@@ -25,6 +25,12 @@ neptune_parse_results_to_tables <- function(data){
   edges <- lapply(gdata$'@value', function(x){
     if(x$`@type`=='g:Edge'){
       edgeDF <- data.frame(x$`@value`[c('id','label','inVLabel','outVLabel','inV','outV')])
+      properties<- gremlin_edge_properties_to_table(x$`@value`$properties)
+      if(!is.null(properties)){
+        cbind(edgeDF,properties)
+      }
+      else
+        edgeDF
       #browser()
       #myProperties <- gremlin_parse_properties_to_data_frame(x$`@value`$properties)
       #cbind(VertexDF,properties )
@@ -62,6 +68,27 @@ gremlin_properties_to_table <- function(x){
   }
   names<-names(properties)[-1]
   properties<-properties[,-1]
+  names(properties)<-names
+  properties
+}
+
+gremlin_edge_properties_to_table <- function(x){
+  properties<-0
+  properties <- as.data.frame(properties)
+  for (i in x) {
+    if(is.list(i$`@value`$value)){
+      prop<-i$`@value`$value$`@value`
+      prop<-as.data.frame(prop,stringAsFactor=FALSE)
+    }else{
+      prop<-i$`@value`$value
+      prop<-as.data.frame(prop,stringAsFactor=FALSE)
+    }
+      names(prop)<-i$`@value`$key
+      properties<-cbind(properties,prop)
+    }
+  names<-names(properties)[-1]
+  properties<-properties[,-1]
+  properties<-as.data.frame(properties)
   names(properties)<-names
   properties
 }
