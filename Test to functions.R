@@ -75,4 +75,8 @@ neptune_load_edges(Edges,ep, definedid = TRUE)
 
 neptune_ping(ep)
 
+###### Download Data ######
+dl_vertex<- neptune_download(ep,element = "vertices")
+dl_edges<- neptune_download(ep,element = "edges")
 
+dl_range_vertex<-neptune_range_download(ep,from=0,to=4,element = "vertices")

@@ -7,14 +7,14 @@
 #' @export
 #' 
 
-neptune_download <- function(ep,element='Vertices'){
+neptune_download <- function(ep,element='vertices'){
   
-  if(element=="Vertices"){
+  if(element=="vertices"){
     data<-neptune_send_json_query(ep,"g.V()",as="parsed")
     result<-neptune_parse_results_to_tables(data)
     result<-result$vertices
   }
-    else if(element=="Edges"){
+    else if(element=="edges"){
       data<-neptune_send_json_query(ep,"g.E()",as="parsed")
       result<-neptune_parse_results_to_tables(data)  
       result<-result$edges
@@ -34,16 +34,16 @@ neptune_download <- function(ep,element='Vertices'){
 #' @export
 #' 
 
-neptune_range_download <- function(ep,from,to,element='Vertices'){
+neptune_range_download <- function(ep,from,to,element='vertices'){
   
   
-  if(element=="Vertices"){
+  if(element=="vertices"){
     query<-paste("g.V().range(",from,",",to,")",sep="")
     data<-neptune_send_json_query(ep,query,as="parsed")
     result<-neptune_parse_results_to_tables(data)
     result<-result$vertices
   }
-  else if(element=="Edges"){
+  else if(element=="edges"){
     query<-paste("g.E().range(",from,",",to,")",sep="")
     data<-neptune_send_json_query(ep,query,as="parsed")
     result<-neptune_parse_results_to_tables(data)  
