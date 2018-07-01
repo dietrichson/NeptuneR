@@ -4,7 +4,7 @@
 \alias{neptune_count_property}
 \title{Count number of elements with chosen value in property}
 \usage{
-neptune_count_property(ep, element = "vertices", property, value)
+neptune_count_property(ep, element = "Vertices", property, value)
 }
 \arguments{
 \item{ep}{Endpoint}
