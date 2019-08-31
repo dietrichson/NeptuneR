@@ -13,7 +13,7 @@ gremlin_parse_properties_to_data_frame <- function(x){
   lapply(myNames,function(myName){ #Data frame for properties
     #Default node type is text node - it has no tag
     nodeValue <- x[[myName]][[1]]$`@value`$value
-    if(!is.character(nodeValue)){
+    if(!is.character(nodeValue) & !is.logical(nodeValue)){
       nodeValue <- x[[myName]][[1]]$`@value`$value$`@value`
     }
     tDF <- data.frame( nodeValue)
